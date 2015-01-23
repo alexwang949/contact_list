@@ -40,24 +40,32 @@ function populateContactsDOM(data) {
 
 	console.log('populateContactsDOM invoked');
 
-	var contactsArray = data['contacts'];
+	var $contactsArray = data['contacts'];
 
-	contactsArray.forEach(function(entry){
+	$contactsArray.forEach(function(entry){
 		var $li = $('<li>Name: ' + entry.name + 'Age: ' + entry.age + 'Address: ' + entry.address + 'Phone: ' + entry.phone_number + '</li>')
 		var $editButton = $('<button>edit</button>');
 		var $removeButton = $('<button>remove</button>');
-		
+
+		$li.attr('dbId', entry.id);
+
+		$editButton.on("click", function(){
+			
+		})
+
+		//this works.
+		$removeButton.on("click", function(){
+			$idFind = $(this).parent().attr('dbId');
+			deleteContactDB($idFind);
+		});
+
+		$li.append($removeButton);
+		$li.append($editButton);
 		$contactsList.append($li);
+
 	});
 
-
 };
-
-
-
-
-
-
 
 
 
