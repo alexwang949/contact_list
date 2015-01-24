@@ -29,7 +29,7 @@ function addContact(data) {
 	
 	if ($nameField.val() == "" || $ageField.val() == "" || $phoneField.val() == "" || $addressField.val() == "") {
 		alert('please do not leave any fields blank.');
-	} else {
+	} else { 	
 
 	createContactDB(postHash);
 
@@ -99,7 +99,7 @@ function populateContactsDOM(data) {
 		$editButton.on("click", function(){
 			$editField.append($updateButton);
 			$li.append($editField);
-			$editField.slideToggle("slow");
+			$editField.slideToggle(300);
 		});
 
 		$updateButton.on("click", function(){
@@ -112,6 +112,10 @@ function populateContactsDOM(data) {
 			var $updateHash = {name: $editNameInput, age: $editAgeInput, address: $editAddressInput, phone_number: $editPhoneInput};
 
 			updateContactDB($idFind, $updateHash);
+
+			//REFRESHES/UPDATES LIST
+			var $idGrab = $categoryName.attr('dbId');
+			getCategByIdDB($idGrab);
 
 		});
 
