@@ -1,0 +1,11 @@
+html {
+	max-width: 80%;
+	margin: 0 auto;
+}
+
+.categ-button {
+	display: inline;
+	color: red;
+	/*float: left;*/
+
+}

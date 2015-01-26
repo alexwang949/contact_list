@@ -1,10 +1,13 @@
 console.log('LINKED');
 
+var categoryInfo;
+
 var $title = $('#title');
 
 var $categ1 = $('#categ1');
 var $categ2 = $('#categ2');
 var $categ3 = $('#categ3');
+var $viewAll = $('#view-all');
 
 var $nameField = $('#name-input');
 var $ageField = $('#age-input');
@@ -18,9 +21,74 @@ var $contactsList = $('#contact-list');
 
 
 
+function viewAllDOM(data) {
+console.log('viewAlLDOM hit!');
+
+	$contactsList.empty();
+
+	data.forEach(function(entry){
+
+	var $li = $('<li> <img src=' + entry.picture + '> Name: ' + entry.name + 'Age: ' + entry.age + 'Address: ' + entry.address + 'Phone: ' + entry.phone_number + '</li>')
+	var $editButton = $('<button>edit</button>');
+	var $editField = $('<div id = "edit-Field" style = "display:none">Name: <input type = "text" id = "edit-name" value=' + entry.name + '> Age: <input type = "text" id = "edit-age" value=' + entry.age + '> Address: <input type = "text" id = "edit-address" value=' + entry.address + '> Phone: <input type = "text" id = "edit-phone" value = ' + entry.phone_number + '>');
+	var $updateButton = $('<button id = "edit-submit">UPDATE</button>');
+	var $removeButton = $('<button>remove</button>');
+	$li.attr('category_id', entry.category_id);
+
+	if ($li.attr('category_id') == 1) {
+	var $appendDropdown = $('<select id = "select-menu"><option selected id = ' + $categ1.attr('dbid') + '>' + $categ1.text() + '</option><option id = ' + $categ2.attr('dbid') + '>' + $categ2.text() + '</option><option id = ' + $categ3.attr('dbid') + '>' + $categ3.text() + '</option></select>');
+	$editField.append($appendDropdown);
+	} else if ($li.attr('category_id') == 2) {
+	var $appendDropdown = $('<select id = "select-menu"><option id = ' + $categ1.attr('dbid') + '>' + $categ1.text() + '</option><option selected id = ' + $categ2.attr('dbid') + '>' + $categ2.text() + '</option><option id = ' + $categ3.attr('dbid') + '>' + $categ3.text() + '</option></select>');
+	$editField.append($appendDropdown);
+	} else if ($li.attr('category_id') == 3) {
+	var $appendDropdown = $('<select id = "select-menu"><option id = ' + $categ1.attr('dbid') + '>' + $categ1.text() + '</option><option id = ' + $categ2.attr('dbid') + '>' + $categ2.text() + '</option><option selected id = ' + $categ3.attr('dbid') + '>' + $categ3.text() + '</option></select>');
+	$editField.append($appendDropdown);
+	}
+
+	$editButton.on("click", function(){
+		$editField.append($updateButton);
+		$li.append($editField);
+		$editField.slideToggle(300);
+	});
+
+
+	$updateButton.on("click", function(){
+		var $editNameInput = $('#edit-name').val();
+		var $editAgeInput = $('#edit-age').val();
+		var $editAddressInput = $('#edit-address').val();
+		var $editPhoneInput = $('#edit-phone').val();
+
+		var $selectedId = $('#select-menu').children(':selected').attr('id');
+
+		var $idFind = entry.id;
+		var $updateHash = {name: $editNameInput, age: $editAgeInput, address: $editAddressInput, phone_number: $editPhoneInput, category_id: $selectedId};
+		
+		updateContactDB($idFind, $updateHash);
+
+		//REFRESHES/UPDATES LIST
+		getAllContactsDB();
+	});
+
+	$removeButton.on("click", function(){
+			$idFind = entry.id
+			deleteContactDB($idFind);
+			$li.remove();
+		});
+
+		$li.append($editButton);
+		$li.append($removeButton);
+		$contactsList.append($li);
+
+});
+	
+};
+
 $addContactButton.on("click", function(){
 	apiCall();
 });
+
+
 
 function addContact(data) {
 
@@ -28,7 +96,7 @@ function addContact(data) {
 	var postHash = {name: $nameField.val(), age: $ageField.val(), phone_number: $phoneField.val(), address: $addressField.val(), picture: getImage, category_id: $categoryName.attr('dbId')};
 	
 	if ($nameField.val() == "" || $ageField.val() == "" || $phoneField.val() == "" || $addressField.val() == "") {
-		alert('please do not leave any fields blank.');
+		alert('Freddy does not appreciate empty input fields...');
 	} else { 	
 
 	createContactDB(postHash);
@@ -43,6 +111,8 @@ function addContact(data) {
 	var $idGrab = $categoryName.attr('dbId');
 	getCategByIdDB($idGrab);
 };
+
+
 
 
 function populateCategDOM(data) {
@@ -75,26 +145,32 @@ function populateCategDOM(data) {
 		$categoryName.text(data[2].name);
 		$categoryName.attr('dbId', data[2].id);
 	});	
+	$viewAll.on("click", function() {
+		getAllContactsDB();
+	})
 
 };
 
 function populateContactsDOM(data) {
 
-	console.log('populateContactsDOM invoked');
+	console.log('populateContactsDOM fired!');
+	
+
 
 	$contactsList.empty();
 
 	var $contactsArray = data['contacts'];
 
 	$contactsArray.forEach(function(entry){
-		var $li = $('<li>Name: ' + entry.name + 'Age: ' + entry.age + 'Address: ' + entry.address + 'Phone: ' + entry.phone_number + 'Recent-Victim: <img src=' + entry.picture + '></li>')
+
+		var $li = $('<li> <img src=' + entry.picture + '> Name: ' + entry.name + 'Age: ' + entry.age + 'Address: ' + entry.address + 'Phone: ' + entry.phone_number + '</li>')
 		var $editButton = $('<button>edit</button>');
-		var $editField = $('<div id = "edit-Field" style = "display:none">Name: <input type = "text" id = "edit-name"> Age: <input type = "text" id = "edit-age"> Address: <input type = "text" id = "edit-address"> Phone: <input type = "text" id = "edit-phone">');
+		var $editField = $('<div id = "edit-Field" style = "display:none">Name: <input type = "text" id = "edit-name" value=' + entry.name + '> Age: <input type = "text" id = "edit-age" value=' + entry.age + '> Address: <input type = "text" id = "edit-address" value=' + entry.address + '> Phone: <input type = "text" id = "edit-phone" value = ' + entry.phone_number + '>');
 		var $updateButton = $('<button id = "edit-submit">UPDATE</button>');
 		var $removeButton = $('<button>remove</button>');
 
-
 		$li.attr('dbId', entry.id);
+
 
 		$editButton.on("click", function(){
 			$editField.append($updateButton);
@@ -120,7 +196,8 @@ function populateContactsDOM(data) {
 		});
 
 		//this works.
-		$removeButton.on("click", function(){
+	
+	$removeButton.on("click", function(){
 			$idFind = $(this).parent().attr('dbId');
 			deleteContactDB($idFind);
 			$li.remove();
@@ -131,7 +208,7 @@ function populateContactsDOM(data) {
 		$contactsList.append($li);
 
 	});
-	
+	// };
 };
 
 
@@ -145,6 +222,7 @@ function apiCall() {
 		addContact(data);
 	})
 }
+
 
 function getAllCategDB() {
 
@@ -180,6 +258,7 @@ function getAllContactsDB() {
 		datatype: 'json',
 	}).done(function(data){
 		console.log(data);
+		viewAllDOM(data);
 	});
 };
 
@@ -228,14 +307,7 @@ function deleteContactDB(id) {
 	});
 };
 
-// function postCategDB(info) {
+getAllCategDB();
 
-// 	$.ajax({
-// 		url: '/categories',
-// 		method: 'POST',
-// 		datatype: 'json',
-// 		data: info
-// 	}).done(function(data){
-// 		console.log(data);
-// 	});
-// }; 
+
+
