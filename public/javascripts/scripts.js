@@ -291,6 +291,7 @@ function createContactDB(info) {
 		data: info
 	}).done(function(data){
 		console.log(data);
+		getCategByIdDB(info.category_id);
 	});
 };
 
