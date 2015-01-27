@@ -1,11 +1,53 @@
 html {
 	max-width: 80%;
-	margin: 0 auto;
+	margin: 0 auto;	
 }
 
 .categ-button {
 	display: inline;
 	color: red;
 	/*float: left;*/
+
+}
+li {
+	clear: both;
+	display: block;
+}
+
+#contact-field {
+	clear: left;
+	float: left;
+	display: block;
+}
+#contact-list {
+	
+}
+
+label {
+	color: red;
+	width: 60px;
+	float: left;
+	clear: left;
+	display: inline-block;
+	line-height: 30px;
+
+}
+
+#alex {
+	line-height: 20px;
+}
+
+input {
+	display: inline-block;
+}
+#add-contact-button {
+	clear: left;
+	display: block;
+	width: 80px;
+	height: 30px;
+}
+
+#input-fields {
+	line-height: 30px;
 
 }

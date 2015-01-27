@@ -3,8 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <title>Contacts</title>
+  <link rel = "stylesheet" type = "text/css" href = "./stylesheets/reset.css" />
   <link rel = "stylesheet" type = "text/css" href = "./stylesheets/styles.css" />
 </head>
+<div class = "wrapper">
 <body>
 	<div id = "title-area">
 		<h1 id = "title">H O R R O R: list of death</h1>
@@ -18,13 +20,14 @@
 			<div id = "categ3" class = "categ-button"><span>categ3</span></div>
 			<div id = "view-all" class = "view-all-button"><span>ViewAllVictims</span></div>
 		</div>
-
-		<br>name: <input type = "text" id = "name-input">
-		<br>age: <input type = "text" id = "age-input">
-		<br>phone: <input type = "text" id = "phone-input">
-		<br>address: <input type = "text" id = "address-input">
-		<br>category: <span id = "alex"></span>
+	<div id = "input-fields">
+		<br><label>name:</label> <input type = "text" id = "name-input">
+		<br><label>age:</label> <input type = "text" id = "age-input">
+		<br><label>phone: </label><input type = "text" id = "phone-input">
+		<br><label>address:</label> <input type = "text" id = "address-input">
+		<br><label>category:</label> <span id = "alex"></span>
 		<br><button id = "add-contact-button">SUBMIT</button>
+	</div>
 	</div>
 
 	<div id = "contact-field">
@@ -33,6 +36,7 @@
 	</div>
 
 </body>
+</div>
 
 
 <script type = "text/javascript" src = "https://code.jquery.com/jquery-2.1.3.min.js"></script>

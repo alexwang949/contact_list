@@ -1,6 +1,6 @@
 console.log('LINKED');
 
-var categoryInfo;
+window.onload = function () {
 
 var $title = $('#title');
 
@@ -25,6 +25,7 @@ function viewAllDOM(data) {
 console.log('viewAlLDOM hit!');
 
 	$contactsList.empty();
+	$('#alex').text('')
 
 	data.forEach(function(entry){
 
@@ -33,6 +34,7 @@ console.log('viewAlLDOM hit!');
 	var $editField = $('<div id = "edit-Field" style = "display:none">Name: <input type = "text" id = "edit-name" value=' + entry.name + '> Age: <input type = "text" id = "edit-age" value=' + entry.age + '> Address: <input type = "text" id = "edit-address" value=' + entry.address + '> Phone: <input type = "text" id = "edit-phone" value = ' + entry.phone_number + '>');
 	var $updateButton = $('<button id = "edit-submit">UPDATE</button>');
 	var $removeButton = $('<button>remove</button>');
+
 	$li.attr('category_id', entry.category_id);
 
 	if ($li.attr('category_id') == 1) {
@@ -45,6 +47,7 @@ console.log('viewAlLDOM hit!');
 	var $appendDropdown = $('<select id = "select-menu"><option id = ' + $categ1.attr('dbid') + '>' + $categ1.text() + '</option><option id = ' + $categ2.attr('dbid') + '>' + $categ2.text() + '</option><option selected id = ' + $categ3.attr('dbid') + '>' + $categ3.text() + '</option></select>');
 	$editField.append($appendDropdown);
 	}
+
 
 	$editButton.on("click", function(){
 		$editField.append($updateButton);
@@ -60,6 +63,7 @@ console.log('viewAlLDOM hit!');
 		var $editPhoneInput = $('#edit-phone').val();
 
 		var $selectedId = $('#select-menu').children(':selected').attr('id');
+		
 
 		var $idFind = entry.id;
 		var $updateHash = {name: $editNameInput, age: $editAgeInput, address: $editAddressInput, phone_number: $editPhoneInput, category_id: $selectedId};
@@ -67,7 +71,7 @@ console.log('viewAlLDOM hit!');
 		updateContactDB($idFind, $updateHash);
 
 		//REFRESHES/UPDATES LIST
-		getAllContactsDB();
+		// getAllContactsDB();
 	});
 
 	$removeButton.on("click", function(){
@@ -87,7 +91,6 @@ console.log('viewAlLDOM hit!');
 $addContactButton.on("click", function(){
 	apiCall();
 });
-
 
 
 function addContact(data) {
@@ -111,8 +114,6 @@ function addContact(data) {
 	var $idGrab = $categoryName.attr('dbId');
 	getCategByIdDB($idGrab);
 };
-
-
 
 
 function populateCategDOM(data) {
@@ -160,7 +161,6 @@ function populateContactsDOM(data) {
 	$contactsList.empty();
 
 	var $contactsArray = data['contacts'];
-
 	$contactsArray.forEach(function(entry){
 
 		var $li = $('<li> <img src=' + entry.picture + '> Name: ' + entry.name + 'Age: ' + entry.age + 'Address: ' + entry.address + 'Phone: ' + entry.phone_number + '</li>')
@@ -171,10 +171,9 @@ function populateContactsDOM(data) {
 
 		$li.attr('dbId', entry.id);
 
-
 		$editButton.on("click", function(){
 			$editField.append($updateButton);
-			$li.append($editField);
+			$li.append($editField); 
 			$editField.slideToggle(300);
 		});
 
@@ -186,8 +185,7 @@ function populateContactsDOM(data) {
 
 			var $idFind = $li.attr('dbId');
 			var $updateHash = {name: $editNameInput, age: $editAgeInput, address: $editAddressInput, phone_number: $editPhoneInput};
-
-			updateContactDB($idFind, $updateHash);
+			updateContactDBsingle($idFind, $updateHash);
 
 			//REFRESHES/UPDATES LIST
 			var $idGrab = $categoryName.attr('dbId');
@@ -209,10 +207,11 @@ function populateContactsDOM(data) {
 
 	});
 	// };
+
 };
 
 
-//DB FUNCTIONS**********MODELS*************
+//DB FUNCTIONS***********************
 function apiCall() {
 
 	$.ajax({
@@ -236,28 +235,26 @@ function getAllCategDB() {
 });
 };
 
-//THIS F(X) RETURNS ALL CONTACTS IN THAT CATEG!!!
 function getCategByIdDB(id) {
-
+	console.log('getCategByIdFIRED!')
 	$.ajax({
 		url: '/categories/' + id,
 		method: 'GET',
 		datatype: 'json'
 	}).done(function(data){
-		console.log(data);
 		populateContactsDOM(data);
 	});
 };
 
 
 function getAllContactsDB() {
+	console.log('getAllcontactsDB hit!')
 
 	$.ajax({
 		url: '/contacts',
 		method: 'GET',
 		datatype: 'json',
 	}).done(function(data){
-		console.log(data);
 		viewAllDOM(data);
 	});
 };
@@ -285,6 +282,28 @@ function createContactDB(info) {
 	});
 };
 
+function updateContactDBsingle (id, info) {
+
+	$.ajax({
+		url: '/contacts/' + id,
+		method: 'PUT',
+		datatype: 'json',
+		data: info
+	}).done(getCategByIdDB(id))
+};
+
+// function getCategByIdDB(id) {
+// 	console.log('getCategByIdFIRED!')
+// 	$.ajax({
+// 		url: '/categories/' + id,
+// 		method: 'GET',
+// 		datatype: 'json'
+// 	}).done(function(data){
+// 		populateContactsDOM(data);
+// 	});
+// };
+
+
 function updateContactDB(id, info) {
 
 	$.ajax({
@@ -293,7 +312,8 @@ function updateContactDB(id, info) {
 		datatype: 'json',
 		data: info
 	}).done(function(data){
-		console.log(data);
+		console.log('updateContactDB hit!')
+		getAllContactsDB();
 	});
 };
 
@@ -309,5 +329,4 @@ function deleteContactDB(id) {
 
 getAllCategDB();
 
-
-
+}
