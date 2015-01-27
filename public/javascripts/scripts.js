@@ -48,13 +48,11 @@ console.log('viewAlLDOM hit!');
 	$editField.append($appendDropdown);
 	}
 
-
 	$editButton.on("click", function(){
 		$editField.append($updateButton);
 		$li.append($editField);
 		$editField.slideToggle(300);
 	});
-
 
 	$updateButton.on("click", function(){
 		var $editNameInput = $('#edit-name').val();
@@ -118,15 +116,27 @@ function addContact(data) {
 
 function populateCategDOM(data) {
 
+//sets names of categ buttons
 	console.log('populateCategDOM invoked');
+	// data.forEach (function(eachCateg){
+	// 	if (eachCateg.id == 1) {
+	// 		$('#categ1 span').text(eachCateg.name);
+	// 		$('#categ1').attr('dbId', eachCateg.id);
+	// 	} else if (eachCateg.id == 2) {
+	// 		$('#categ2 span').text(eachCateg.name);
+	// 		$('#categ2').attr('dbId', eachCateg.id);
+	// 	} else if (eachCateg.id == 3) {
+	// 		$('#categ3 span').text(eachCateg.name);
+	// 		$('#categ3').attr('dbId', eachCateg.id);
+	// 	}
 
 	$('#categ1 span').text(data[0].name);
-	$('#categ2 span').text(data[1].name);
-	$('#categ3 span').text(data[2].name);
+	$('#categ2 span').text(data[2].name);
+	$('#categ3 span').text(data[1].name);
 
 	$('#categ1').attr('dbId', data[0].id);
-	$('#categ2').attr('dbId', data[1].id);
-	$('#categ3').attr('dbId', data[2].id);
+	$('#categ2').attr('dbId', data[2].id);
+	$('#categ3').attr('dbId', data[1].id);
 
 	$categ1.on("click", function() {
 		var $idGrab = $('#categ1').attr('dbId');
@@ -137,15 +147,17 @@ function populateCategDOM(data) {
 	$categ2.on("click", function() {
 		var $idGrab = $('#categ2').attr('dbId');
 		getCategByIdDB($idGrab);
-		$categoryName.text(data[1].name);
-		$categoryName.attr('dbId', data[1].id);
+		$categoryName.text(data[2].name);
+		$categoryName.attr('dbId', data[2].id);
 	});
 	$categ3.on("click", function() {
 		var $idGrab = $('#categ3').attr('dbId');
 		getCategByIdDB($idGrab);
-		$categoryName.text(data[2].name);
-		$categoryName.attr('dbId', data[2].id);
+		$categoryName.text(data[1].name);
+		$categoryName.attr('dbId', data[1].id);
 	});	
+	/////forEach END
+	
 	$viewAll.on("click", function() {
 		getAllContactsDB();
 	})
@@ -231,7 +243,7 @@ function getAllCategDB() {
 		datatype: 'json'
 	}).done(function(data) {
 		populateCategDOM(data);
-		
+		console.log(data);
 });
 };
 
@@ -311,7 +323,7 @@ function updateContactDB(id, info) {
 		method: 'PUT',
 		datatype: 'json',
 		data: info
-	}).done(function(data){
+	}).done(function(){
 		console.log('updateContactDB hit!')
 		getAllContactsDB();
 	});
@@ -326,7 +338,5 @@ function deleteContactDB(id) {
 		console.log(data);
 	});
 };
-
 getAllCategDB();
-
 }
