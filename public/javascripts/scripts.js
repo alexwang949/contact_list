@@ -163,6 +163,12 @@ function populateCategDOM(data) {
 
 };
 
+// function getCat(element, cat) {
+// 		getCategByIdDB(cat.id);
+// 		$categoryName.text(cat.name);
+// 		element.attr('dbId', data[1].id);
+// }
+
 function populateContactsDOM(data) {
 
 	console.log('populateContactsDOM fired!');
@@ -270,14 +276,14 @@ function getAllContactsDB() {
 	});
 };
 
-function getContactByIdDB(id) {
+function getContactByIdDB(id, someFunc) {
 
 	$.ajax({
 		url: '/contacts/' + id,
 		method: 'GET',
 		datatype: 'json'
 	}).done(function(data){
-		console.log(data);
+		someFunc(data);
 	});
 };
 

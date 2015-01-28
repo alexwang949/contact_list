@@ -29,10 +29,11 @@ img {
 	border-style: solid;
 	border-radius: 5px;
 	border-width: 4px;
-	border-color: gray;
+	border-color: black;
 }
  button {
  	width: 5em;
+ 
  }
 #title-area{
 	margin-top: 1em;
@@ -161,6 +162,16 @@ input {
 	height: 20px;
 	margin-top: 5px;
 	border-radius: 10px;
+}
+#add-contact-button:hover {
+	clear: left;
+	display: block;
+	width: 80px;
+	height: 20px;
+	margin-top: 5px;
+	border-radius: 10px;
+	background-color: black;
+	color: white;
 }
 
 #input-fields {
