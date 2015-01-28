@@ -5,12 +5,20 @@
   <title>Contacts</title>
   <link rel = "stylesheet" type = "text/css" href = "./stylesheets/reset.css" />
   <link rel = "stylesheet" type = "text/css" href = "./stylesheets/styles.css" />
-</head>
-<div class = "wrapper">
+<link href='http://fonts.googleapis.com/css?family=Crushed|Cinzel|IM+Fell+English' rel='stylesheet' type='text/css'>
+	</head>
+<div id = "wrapper">
 <body>
 	<div id = "title-area">
-		<h1 id = "title">H O R R O R: list of death</h1>
+		<h1 id = "title">H O R R O R : victims by killer</h1>
 	</div>
+<!-- <audio> -->
+		<audio src = "/sounds/scream.mp3">
+		</audio>
+
+	<!-- 	</source>
+	</audio>
+ -->
 
 	<div id = "categories-wrapper">
 
@@ -18,14 +26,15 @@
 			<div id = "categ1" class = "categ-button"><span>categ1</span></div>
 			<div id = "categ2" class = "categ-button"><span>categ2</span></div>
 			<div id = "categ3" class = "categ-button"><span>categ3</span></div>
-			<div id = "view-all" class = "view-all-button"><span>ViewAllVictims</span></div>
+			<br><div id = "view-all" class = "categ-button"><span>View All Victims</span></div>
 		</div>
 	<div id = "input-fields">
+		<p id = "add-label"> New Victim </p>
 		<br><label>name:</label> <input type = "text" id = "name-input">
 		<br><label>age:</label> <input type = "text" id = "age-input">
 		<br><label>phone: </label><input type = "text" id = "phone-input">
 		<br><label>address:</label> <input type = "text" id = "address-input">
-		<br><label>category:</label> <span id = "alex"></span>
+		<br><label>killer: </label> <span id = "alex"></span>
 		<br><button id = "add-contact-button">SUBMIT</button>
 	</div>
 	</div>
@@ -34,6 +43,8 @@
 		<ul id = "contact-list" style = "list-style:none">
 		</ul>
 	</div>
+
+
 
 </body>
 </div>

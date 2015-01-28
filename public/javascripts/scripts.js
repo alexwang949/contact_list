@@ -20,6 +20,12 @@ var $contactsField = $('#contact-field');
 var $contactsList = $('#contact-list');
 
 
+var $audio = $('audio');
+
+
+
+
+
 
 function viewAllDOM(data) {
 console.log('viewAlLDOM hit!');
@@ -29,9 +35,9 @@ console.log('viewAlLDOM hit!');
 
 	data.forEach(function(entry){
 
-	var $li = $('<li> <img src=' + entry.picture + '> Name: ' + entry.name + 'Age: ' + entry.age + 'Address: ' + entry.address + 'Phone: ' + entry.phone_number + '</li>')
+	var $li = $('<li> <img src=' + entry.picture + '><br><span>Name:</span> ' + entry.name + '<br><span>Age:</span> ' + entry.age + '<br><span>Address:</span> ' + entry.address + '<br><span>Phone:</span> ' + entry.phone_number + '</li>')
 	var $editButton = $('<button>edit</button>');
-	var $editField = $('<div id = "edit-Field" style = "display:none">Name: <input type = "text" id = "edit-name" value=' + entry.name + '> Age: <input type = "text" id = "edit-age" value=' + entry.age + '> Address: <input type = "text" id = "edit-address" value=' + entry.address + '> Phone: <input type = "text" id = "edit-phone" value = ' + entry.phone_number + '>');
+	var $editField = $('<div id = "edit-Field" style = "display:none">Name:<input type = "text" id = "edit-name" value=' + entry.name + '>Age:<input type = "text" id = "edit-age" value=' + entry.age + '>Address:<input type = "text" id = "edit-address" value=' + entry.address + '>Phone: <input type = "text" id = "edit-phone" value = ' + entry.phone_number + '>');
 	var $updateButton = $('<button id = "edit-submit">UPDATE</button>');
 	var $removeButton = $('<button>remove</button>');
 
@@ -76,6 +82,7 @@ console.log('viewAlLDOM hit!');
 			$idFind = entry.id
 			deleteContactDB($idFind);
 			$li.remove();
+
 		});
 
 		$li.append($editButton);
@@ -118,17 +125,6 @@ function populateCategDOM(data) {
 
 //sets names of categ buttons
 	console.log('populateCategDOM invoked');
-	// data.forEach (function(eachCateg){
-	// 	if (eachCateg.id == 1) {
-	// 		$('#categ1 span').text(eachCateg.name);
-	// 		$('#categ1').attr('dbId', eachCateg.id);
-	// 	} else if (eachCateg.id == 2) {
-	// 		$('#categ2 span').text(eachCateg.name);
-	// 		$('#categ2').attr('dbId', eachCateg.id);
-	// 	} else if (eachCateg.id == 3) {
-	// 		$('#categ3 span').text(eachCateg.name);
-	// 		$('#categ3').attr('dbId', eachCateg.id);
-	// 	}
 
 	$('#categ1 span').text(data[0].name);
 	$('#categ2 span').text(data[2].name);
@@ -167,7 +163,6 @@ function populateCategDOM(data) {
 function populateContactsDOM(data) {
 
 	console.log('populateContactsDOM fired!');
-	
 
 
 	$contactsList.empty();
@@ -175,9 +170,9 @@ function populateContactsDOM(data) {
 	var $contactsArray = data['contacts'];
 	$contactsArray.forEach(function(entry){
 
-		var $li = $('<li> <img src=' + entry.picture + '> Name: ' + entry.name + 'Age: ' + entry.age + 'Address: ' + entry.address + 'Phone: ' + entry.phone_number + '</li>')
+		var $li = $('<li> <img src=' + entry.picture + '> <br><span>Name: </span>' + entry.name + ' <br><span>Age:</span> ' + entry.age + '<span> <br>Address:</span> ' + entry.address + ' <br><span>Phone:</span>' + entry.phone_number + '</li>')
 		var $editButton = $('<button>edit</button>');
-		var $editField = $('<div id = "edit-Field" style = "display:none">Name: <input type = "text" id = "edit-name" value=' + entry.name + '> Age: <input type = "text" id = "edit-age" value=' + entry.age + '> Address: <input type = "text" id = "edit-address" value=' + entry.address + '> Phone: <input type = "text" id = "edit-phone" value = ' + entry.phone_number + '>');
+		var $editField = $('<div id = "edit-Field" style = "display:none">Name:<input type = "text" id = "edit-name" value=' + entry.name + '> Age: <input type = "text" id = "edit-age" value=' + entry.age + '> Address:<input type = "text" id = "edit-address" value=' + entry.address + '> Phone:<input type = "text" id = "edit-phone" value = ' + entry.phone_number + '>');
 		var $updateButton = $('<button id = "edit-submit">UPDATE</button>');
 		var $removeButton = $('<button>remove</button>');
 
@@ -194,13 +189,13 @@ function populateContactsDOM(data) {
 			var $editAgeInput = $('#edit-age').val();
 			var $editAddressInput = $('#edit-address').val();
 			var $editPhoneInput = $('#edit-phone').val();
+			var $idGrab = $categoryName.attr('dbId');
 
 			var $idFind = $li.attr('dbId');
 			var $updateHash = {name: $editNameInput, age: $editAgeInput, address: $editAddressInput, phone_number: $editPhoneInput};
 			updateContactDBsingle($idFind, $updateHash);
 
 			//REFRESHES/UPDATES LIST
-			var $idGrab = $categoryName.attr('dbId');
 			getCategByIdDB($idGrab);
 
 		});
@@ -248,7 +243,7 @@ function getAllCategDB() {
 };
 
 function getCategByIdDB(id) {
-	console.log('getCategByIdFIRED!')
+	console.log('getCategByIdDBFIRED!')
 	$.ajax({
 		url: '/categories/' + id,
 		method: 'GET',
@@ -296,14 +291,16 @@ function createContactDB(info) {
 };
 
 function updateContactDBsingle (id, info) {
-
+console.log('updateContactDBsingle!')
 	$.ajax({
 		url: '/contacts/' + id,
 		method: 'PUT',
 		datatype: 'json',
 		data: info
-	}).done(getCategByIdDB(id))
+	});
 };
+// 	}).done(getCategByIdDB(info.category_id))
+// };
 
 // function getCategByIdDB(id) {
 // 	console.log('getCategByIdFIRED!')
@@ -315,7 +312,6 @@ function updateContactDBsingle (id, info) {
 // 		populateContactsDOM(data);
 // 	});
 // };
-
 
 function updateContactDB(id, info) {
 
@@ -340,4 +336,7 @@ function deleteContactDB(id) {
 	});
 };
 getAllCategDB();
-}
+
+
+
+};

@@ -1,30 +1,122 @@
 html {
-	max-width: 80%;
+	max-width: 75%;
 	margin: 0 auto;	
+	font-family: 'IM Fell English', serif;
+	background-color: black;
+	font-style: bold;
+	font-weight: bold;
+}
+/*
+//font-family: 'Crushed', cursive;
+font-family: 'Cinzel', serif;
+font-family: 'IM Fell English', serif;*/
+#wrapper {
+	overflow: hidden;
+	background-color: white;
+	padding-left: 1em;
+	padding-right: 1em;
+	background-image: url("../images/blood.jpg");
+
+}
+ 
+ button {
+ 	width: 5em;
+ }
+#title-area{
+	margin-top: 1em;
+}
+#title {
+/*font-family: 'Crushed', cursive;
+*//*ont-family: 'Cinzel', serif;*/
+font-family: 'IM Fell English', serif;
+	margin: 0 auto;
+	text-align: center;
+	font-size: 3em;
 }
 
-.categ-button {
-	display: inline;
+#edit-Field span {
 	color: red;
-	/*float: left;*/
+}
+
+
+#contact-list span {
+color: black;
+font-weight: bold;
+font-size: 1.5em;
+}
+
+#categories-buttons-area {
+	text-align: center;
+}
+.categ-button {
+	display: inline-block;
+	color: #ab0303;
+	width: 19.6%;
+	height: 2em;
+	line-height: 2em;
+	font-size: 1.5em;
+/*	background-color: gray;
+*/	border-style: solid;
+	border-radius: 3px;
+	margin-top: 10px;
+	border-color: black;
+	border-width: 4px;
+/*	background-color: gray;
+*//*	background-color: black;
+*/	/*float: left;*/
 
 }
+
+.categ-button:hover {
+	background-color: black;
+		display: inline-block;
+	color: #ab0303;
+	width: 19.6%;
+	height: 2em;
+	line-height: 2em;
+	font-size: 1.5em;
+/*	background-color: gray;
+*/	border-style: solid;
+	border-radius: 3px;
+	margin-top: 10px;
+	border-color: black;
+	border-width: 4px;
+	background-color: black;
+}
+
+#view-all {
+background-color: gray;
+opacity: .9;
+color: white;
+
+}
+
+#view-all:hover {
+	background-color: black;
+}
+
 li {
 	clear: both;
 	display: block;
+	padding-top: 1em;
+	padding-bottom: 1em;
 }
 
 #contact-field {
-	clear: left;
+
 	float: left;
 	display: block;
+padding-top: 1em;
 }
-#contact-list {
-	
+
+#add-label {
+	text-align: center; 
+	font-size: 1.5em;
 }
 
 label {
-	color: red;
+	color: black;
+	font-weight: bold;
 	width: 60px;
 	float: left;
 	clear: left;
@@ -40,14 +132,37 @@ label {
 input {
 	display: inline-block;
 }
+
+/*#edit-Field span {
+	color: red;
+	width: 60px;
+	float: left;
+	clear: left;
+	display: inline-block;
+	line-height: 20px;
+
+}*/
 #add-contact-button {
 	clear: left;
 	display: block;
 	width: 80px;
-	height: 30px;
+	height: 20px;
+	margin-top: 5px;
+	border-radius: 10px;
 }
 
 #input-fields {
 	line-height: 30px;
+	float: right;
+	width: 12em;
+	height: 15em;
+	overflow: hidden;
+	border-radius: 10px;
+	border-width: 2px;
+	border-color: black;
+	border-style: solid;
+	padding: 5px;
+	opacity: .8;
+	font: bold;
 
 }
