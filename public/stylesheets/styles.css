@@ -16,9 +16,21 @@ font-family: 'IM Fell English', serif;*/
 	padding-left: 1em;
 	padding-right: 1em;
 	background-image: url("../images/blood.jpg");
+	border-style: solid;
+	border-width: 8px;
+	border-left: solid;
+	border-right: solid;
+	border-color: gray;
+	border-top: none;
+
 
 }
- 
+img {
+	border-style: solid;
+	border-radius: 5px;
+	border-width: 4px;
+	border-color: gray;
+}
  button {
  	width: 5em;
  }

@@ -20,7 +20,8 @@ var $contactsField = $('#contact-field');
 var $contactsList = $('#contact-list');
 
 
-var $audio = $('audio');
+// var $audio = $('#scream');
+// var $chainsaw = $('#chainsaw');
 
 
 
@@ -31,7 +32,7 @@ function viewAllDOM(data) {
 console.log('viewAlLDOM hit!');
 
 	$contactsList.empty();
-	$('#alex').text('')
+	$('#alex').text('Select your Killer.')
 
 	data.forEach(function(entry){
 
@@ -82,6 +83,7 @@ console.log('viewAlLDOM hit!');
 			$idFind = entry.id
 			deleteContactDB($idFind);
 			$li.remove();
+			$('#scream')[0].play();
 
 		});
 
@@ -104,7 +106,7 @@ function addContact(data) {
 	var postHash = {name: $nameField.val(), age: $ageField.val(), phone_number: $phoneField.val(), address: $addressField.val(), picture: getImage, category_id: $categoryName.attr('dbId')};
 	
 	if ($nameField.val() == "" || $ageField.val() == "" || $phoneField.val() == "" || $addressField.val() == "") {
-		alert('Freddy does not appreciate empty input fields...');
+		alert($categoryName.text() + ' does not appreciate empty input fields...');
 	} else { 	
 
 	createContactDB(postHash);
@@ -135,6 +137,7 @@ function populateCategDOM(data) {
 	$('#categ3').attr('dbId', data[1].id);
 
 	$categ1.on("click", function() {
+		$('#chainsaw')[0].play();
 		var $idGrab = $('#categ1').attr('dbId');
 		getCategByIdDB($idGrab);
 		$categoryName.text(data[0].name);
@@ -206,6 +209,7 @@ function populateContactsDOM(data) {
 			$idFind = $(this).parent().attr('dbId');
 			deleteContactDB($idFind);
 			$li.remove();
+			$('audio')[0].play();
 		});
 
 		$li.append($editButton);
